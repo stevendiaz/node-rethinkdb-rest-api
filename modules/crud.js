@@ -5,13 +5,13 @@
   r.connect( {host: 'localhost', port: 28015}, function(err, conn) {
     if (err) throw err;
     connection = conn;
-    r.db('test').tableCreate('cruds').run(conn, function(err, res) {
+    r.db('api').tableCreate('objects').run(conn, function(err, res) {
       if (err){
         if(err.name === "RqlRuntimeError") {
-            console.log("Table already exist. Skipping creation.");
+            console.log("This table already exists. Table not created");
         }
         else if(err.name === "ReqlOpFailedError") {
-            console.log("Table already exists. Skipping creation.");
+            console.log("This table already exists. Table not created");
         }
         else {
             console.log(res);
@@ -35,19 +35,23 @@
     var id = req.params.id;
     r.table('cruds').get(id).
       run(connection, function(err, result) {
-          if (err) throw err;
+          if (err)
+            throw err;
           res.send(JSON.stringify(result, null, 2));
       });
   };
 
   exports.create = function(req, res) {
     var presentation = req.body;
-    console.log(JSON.stringify(req.body));
+    console.log(JSON.stringify(req.body, null, 2));
     r.table('cruds').insert(presentation).
       run(connection, function(err, result) {
-        if (err) throw err;
+        if (err)
+          throw err;
         console.log("created!");
-        res.send(JSON.stringify({status: 'ok', location: '/cruds/'+result.generated_keys[0]}));
+        req.body.id = result.generated_keys[0];
+        res.send(JSON.stringify(req.body, null, 2));
+        //res.send(JSON.stringify({status: 'ok', location: '/api/objects/'+result.generated_keys[0]}));
       });
   };
 
@@ -56,7 +60,9 @@
         id = req.params.id;
     r.table('cruds').get(id).update(presentation).
       run(connection, function(err, result) {
-        if (err) throw err;
+        if (err)
+          throw err;
+        console.log("updated!");
         res.send(JSON.stringify({status: 'ok'}));
       });
   };
@@ -66,6 +72,7 @@
     r.table('cruds').get(id).delete().
       run(connection, function(err, result) {
           if (err) throw err;
+          console.log("deleted!");
           res.send(JSON.stringify({status: 'ok'}));
       });
   };

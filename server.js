@@ -3,11 +3,11 @@ var express = require('express'),
     app = express();
 
 app.use(express.bodyParser());
-app.get('/cruds', module.findAll);
-app.get('/cruds/:id', module.findById);
-app.post('/cruds', module.create);
-app.delete('/cruds/:id', module.delete);
-app.put('/cruds/:id', module.update);
+app.get('/objects', module.findAll); //Addition to spec: HTTP GET all objects
+app.get('/objects/:id', module.findById);
+app.post('/objects', module.create);
+app.delete('/objects/:id', module.delete);
+app.put('/objects/:id', module.update);
 
 app.listen(3000);
 console.log('Listening on port 3000...');
