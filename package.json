@@ -1,0 +1,9 @@
+{
+    "name": "toy-rest-api",
+    "description": "Learning REST and HTTP methods",
+    "version": "0.0.1",
+    "private": false,
+    "dependencies": {
+        "express": "3.x"
+    }
+}
