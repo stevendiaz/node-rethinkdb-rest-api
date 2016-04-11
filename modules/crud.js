@@ -55,6 +55,7 @@
       });
   };
 
+  //HTTP POST
   exports.update = function(req, res) {
     var presentation = req.body,
         id = req.params.id;
@@ -63,7 +64,8 @@
         if (err)
           throw err;
         console.log("updated!");
-        res.send(JSON.stringify({status: 'ok'}));
+        req.body.id = id;
+        res.send(JSON.stringify(req.body, null, 2));
       });
   };
 
@@ -73,7 +75,7 @@
       run(connection, function(err, result) {
           if (err) throw err;
           console.log("deleted!");
-          res.send(JSON.stringify({status: 'ok'}));
+          res.send();
       });
   };
 })();
