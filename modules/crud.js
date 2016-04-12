@@ -23,9 +23,12 @@
 
   exports.findAll = function(req, res) {
     r.table('cruds').run(connection, function(err, cursor) {
-        if (err) throw err;
+        if (err)
+          throw err;
         cursor.toArray(function(err, result) {
-            if (err) throw err;
+            if (err)
+              throw err;
+            console.log("retrieved all!");
             res.send(JSON.stringify(result, null, 2));
         });
     });
@@ -37,6 +40,7 @@
       run(connection, function(err, result) {
           if (err)
             throw err;
+          console.log("retrieved by ID!")
           res.send(JSON.stringify(result, null, 2));
       });
   };
@@ -64,7 +68,7 @@
         if (err)
           throw err;
         console.log("updated!");
-        req.body.id = id;
+        req.params.id = id;
         res.send(JSON.stringify(req.body, null, 2));
       });
   };
@@ -73,7 +77,8 @@
     var id = req.params.id;
     r.table('cruds').get(id).delete().
       run(connection, function(err, result) {
-          if (err) throw err;
+          if (err)
+            throw err;
           console.log("deleted!");
           res.send();
       });
