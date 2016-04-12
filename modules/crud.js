@@ -5,13 +5,13 @@
   r.connect( {host: 'localhost', port: 28015}, function(err, conn) {
     if (err) throw err;
     connection = conn;
-    r.db('api').tableCreate('objects').run(conn, function(err, res) {
+    r.db('api').tableCreate('cruds').run(conn, function(err, res) {
       if (err){
         if(err.name === "RqlRuntimeError") {
             console.log("This table already exists. Table not created");
         }
         else if(err.name === "ReqlOpFailedError") {
-            console.log("This table already exists. Table not created");
+            console.log("ReqlOpError: This table already exists. Table not created");
         }
         else {
             console.log(res);
