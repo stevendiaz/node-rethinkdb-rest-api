@@ -8,7 +8,7 @@
     r.db('api').tableCreate('cruds').run(conn, function(err, res) {
       if (err){
         if(err.name === "RqlRuntimeError") {
-            console.log("This table already exists. Table not created");
+            console.log("RqlRuntimeError: This table already exists. Table not created");
         }
         else if(err.name === "ReqlOpFailedError") {
             console.log("ReqlOpError: This table already exists. Table not created");
@@ -55,7 +55,6 @@
         console.log("created!");
         req.body.id = result.generated_keys[0];
         res.send(JSON.stringify(req.body, null, 2));
-        //res.send(JSON.stringify({status: 'ok', location: '/api/objects/'+result.generated_keys[0]}));
       });
   };
 
