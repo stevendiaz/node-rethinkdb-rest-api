@@ -5,6 +5,7 @@
   r.connect( {host: 'localhost', port: 28015}, function(err, conn) {
     if (err) throw err;
     connection = conn;
+    conn.use('api')
     r.db('api').tableCreate('cruds').run(conn, function(err, res) {
       if (err){
         if(err.name === "RqlRuntimeError") {
